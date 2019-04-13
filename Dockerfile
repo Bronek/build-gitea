@@ -4,9 +4,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends git make \
     && rm -rf /var/lib/apt/lists/*
 
-ARG REF=master
+ARG COMMIT=master
 RUN go get -d -u code.gitea.io/gitea
 WORKDIR ${GOPATH}/src/code.gitea.io/gitea
-
-RUN git checkout ${REF}
+RUN git checkout ${COMMIT}
 RUN TAGS="bindata" make generate build

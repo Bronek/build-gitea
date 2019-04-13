@@ -8,13 +8,13 @@ USERID  = $(shell id -u):$(shell id -g)
 default: copy
 
 build:
-	$(DOCKER) build --build-arg REF=$(COMMIT) -t build-gitea-$(USER) --iidfile $(IIDFILE) .
+	$(DOCKER) build --build-arg COMMIT=$(COMMIT) -t build-gitea-$(USER) --iidfile $(IIDFILE) .
 
 clean:
 	rm -rf $(PWD)/dist
 
 copy: build clean
 	mkdir -p $(PWD)/dist
-	$(DOCKER) run --rm -v $(PWD)/dist:/dist $$(cat $(IIDFILE)) sh -c \
-		'cp ./gitea /dist && chown $(USERID) -R /dist'
+	$(DOCKER) run --rm -v $(PWD)/dist:/dist -u $(USERID) $$(cat $(IIDFILE)) sh -c \
+		'cp ./gitea /dist'
 
