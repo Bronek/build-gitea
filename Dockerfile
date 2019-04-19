@@ -1,4 +1,6 @@
-FROM golang:1.12.2-stretch AS builder
+ARG GO_REL
+FROM golang:${GO_REL}-stretch AS builder
+
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
     && apt-get install -y --no-install-recommends git make \

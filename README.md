@@ -8,7 +8,7 @@ This only builds the binary, but given that Golang application by design do not 
 perfectly fine to copy the resulting binary to `/usr/local/bin` and be done with it.
 
 Update `VERSION` inside `Makefile` to a more recent stable version when the time comes ;) and send me the pull request if
-I miss it. Similarly update `FROM` in `Dockerfile` to a more recent Golang release at the appropriate time.
+I miss it. Similarly update `GO_REL` to a more recent Golang release at the appropriate time.
 
 The downside of not having any runtime dependencies is that the binary should be rebuilt whenever **any** of its source dependencies change.
 It is a good thing that Golang binaries build really quickly.
