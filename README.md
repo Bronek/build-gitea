@@ -2,7 +2,7 @@
 
 A dockerfile to build gitea https://gitea.io/ for Debian, Ubuntu etc.
 
-Docker is a prerequisite, but any old version will do (we are not doing anything fancy).
+[Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) or [Podman](https://podman.io/getting-started/installation.html) (preferred) is a prerequisite, but any old version will do (we are not doing anything fancy).
 
 This only builds the binary, but given that Golang application by design do not have runtime depedencies it is
 perfectly fine to copy the resulting binary to `/usr/local/bin` and be done with it.
