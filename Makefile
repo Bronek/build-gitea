@@ -1,5 +1,5 @@
 # Note, 'v' version prefix added below
-VERSION = 1.10.3
+VERSION = 1.11.0
 COMMIT := v$(VERSION)
 GO_REL  = 1.13.7
 ifeq ($(origin DRIVER), undefined)
