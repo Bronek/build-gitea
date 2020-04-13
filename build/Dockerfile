@@ -8,8 +8,4 @@ RUN DEBIAN_FRONTEND=noninteractive \
     apt-get install -y nodejs && \
     rm -rf /var/lib/apt/lists/*
 
-ARG COMMIT=master
-RUN go get -d -u code.gitea.io/gitea
-WORKDIR ${GOPATH}/src/code.gitea.io/gitea
-RUN git checkout ${COMMIT}
-RUN TAGS="bindata" make generate build
+EXPOSE 3000
