@@ -16,16 +16,27 @@ USERID := $(shell id -u):$(shell id -g)
 
 default: copy
 
-build:
+.PHONY: build
+build: iid.txt
+
+iid.txt:
 	$(DRIVER) build --build-arg GO_REL=$(GO_REL) --build-arg COMMIT=$(COMMIT) -t build-gitea-$(USER) --iidfile $(IIDFILE) .
+	cp  $(IIDFILE) iid.txt
 
-clean:
+.PHONY: copy
+copy: dist/gitea dist/public.tar.gz
+
+dist/gitea dist/public.tar.gz: iid.txt
 	rm -rf $(PWD)/dist
-
-copy: build clean
 	mkdir -p $(PWD)/dist
-	$(DRIVER) run --rm -v $(PWD)/dist:/dist:Z $$(cat $(IIDFILE)) sh -c \
+	$(DRIVER) run --rm -v $(PWD)/dist:/dist:Z $$(cat iid.txt) sh -c \
 		'cp ./gitea /dist && chown $(USERID) /dist/gitea'
+	$(DRIVER) run --rm -v $(PWD)/dist:/dist:Z $$(cat iid.txt) sh -c \
+		'tar -czf /dist/public.tar.gz ./public/ && chown $(USERID) /dist/public.tar.gz'
 	# We do not know if DRIVER is rootless or not, so just in case try unshare.
-	$(DRIVER) unshare chown 0:0 $(PWD)/dist/gitea 2>/dev/null || echo
+	$(DRIVER) unshare chown 0:0 -R $(PWD)/dist/ 2>/dev/null || echo -n
 
+.PHONY: clean
+clean:
+	rm -f $(PWD)/iid.txt
+	rm -rf $(PWD)/dist
