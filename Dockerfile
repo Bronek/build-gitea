@@ -12,4 +12,5 @@ ARG COMMIT=master
 RUN go get -d -u code.gitea.io/gitea
 WORKDIR ${GOPATH}/src/code.gitea.io/gitea
 RUN git checkout ${COMMIT}
+RUN git cherry-pick -n e24ee487760cade0c47958fa8c4c1b980875900f
 RUN TAGS="bindata" make build
