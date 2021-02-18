@@ -1,5 +1,5 @@
 ARG GO_REL
-FROM golang:${GO_REL}-stretch AS builder
+FROM golang:${GO_REL}-buster AS builder
 
 RUN DEBIAN_FRONTEND=noninteractive \
     curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh && \
