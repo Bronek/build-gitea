@@ -8,8 +8,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
     apt-get install -y nodejs && \
     rm -rf /var/lib/apt/lists/*
 
-ARG COMMIT=master
-RUN go get -d -u code.gitea.io/gitea
-WORKDIR ${GOPATH}/src/code.gitea.io/gitea
-RUN git checkout ${COMMIT}
-RUN TAGS="bindata" make build
+WORKDIR /work
+ARG RELEASE
+RUN curl -fsSL https://github.com/go-gitea/gitea/archive/refs/tags/${RELEASE}.tar.gz | tar -xz --strip-components=1
+RUN DRONE_TAG="${RELEASE}" TAGS="bindata" make build

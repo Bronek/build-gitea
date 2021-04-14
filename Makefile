@@ -1,6 +1,6 @@
 # Note, 'v' version prefix added below
-VERSION = 1.13.7
-COMMIT := v$(VERSION)
+VERSION = 1.14.0
+RELEASE:= v$(VERSION)
 GO_REL  = 1.15.11
 ifeq ($(origin DRIVER), undefined)
   ifneq ($(shell which podman 2>/dev/null || echo 0), 0)
@@ -20,7 +20,7 @@ default: copy
 build: iid.txt
 
 iid.txt:
-	$(DRIVER) build --build-arg GO_REL=$(GO_REL) --build-arg COMMIT=$(COMMIT) -t build-gitea-$(USER) --iidfile $(IIDFILE) .
+	$(DRIVER) build --build-arg GO_REL=$(GO_REL) --build-arg RELEASE=$(RELEASE) -t build-gitea-$(USER) --iidfile $(IIDFILE) .
 	cp  $(IIDFILE) iid.txt
 
 .PHONY: copy
